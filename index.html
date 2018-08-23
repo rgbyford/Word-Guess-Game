@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <title>Word Guess</title>
+</head>
+
+<body>
+    <input type="text" id="demo">
+    <!--    <p>Press a key</p>
+-->
+    <script src="assets/javascript/game.js">
+        var el = window; //we identify the element we want to target a listener on
+        //remember IE can't capture on the window before IE9 on keypress.
+
+        //var eventName = 'keypress'; //know which one you want, this page helps you figure that out: http://www.quirksmode.org/dom/events/keys.html
+        //and here's another good reference page: http://unixpapa.com/js/key.html
+        //because you are looking to capture for things that produce a character
+        //you want the keypress event.
+
+        //we are looking to bind for IE or non-IE, 
+        //so we have to test if .addEventListener is supported, 
+        //and if not, assume we are on IE. 
+        //If neither exists, you're screwed, but we didn't cover that in the else case.
+        el.addEventListener('keypress', keyPressed, false);
+    </script>
+</body>
+
+</html>
