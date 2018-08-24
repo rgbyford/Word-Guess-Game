@@ -11,24 +11,42 @@
     <title>Word Guess</title>
 </head>
 
-<body>
-    <input type="text" id="demo">
-    <!--    <p>Press a key</p>
--->
+<style>
+p {font-size: 14pt}
+body, html {
+    height: 100%;
+}
+
+.bg { 
+    /* The image used */
+    background-image: url("https://images.pexels.com/photos/733174/pexels-photo-733174.jpeg?auto=compress&cs=tinysrgb&h=350");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+//body {
+    background-color: lightblue;
+//}
+</style>
+
+<body class="bg">
+    <br>
+    <p>Guesses:</p>
+    <input id="guesses" type="text" autofocus onkeyup="keyPressed()">
+    <br><br>
+    <p id="start">Press any key to get started</p>
+    <p id="wins">Wins:  0</p>
+    <p id="guessesLeft">Guesses left:  9</p>
+    <p id="gotIt"> </p>
+    <p id="warning"> </p>
+    <p id="again"> </p>
     <script src="assets/javascript/game.js">
-        var el = window; //we identify the element we want to target a listener on
-        //remember IE can't capture on the window before IE9 on keypress.
-
-        //var eventName = 'keypress'; //know which one you want, this page helps you figure that out: http://www.quirksmode.org/dom/events/keys.html
-        //and here's another good reference page: http://unixpapa.com/js/key.html
-        //because you are looking to capture for things that produce a character
-        //you want the keypress event.
-
-        //we are looking to bind for IE or non-IE, 
-        //so we have to test if .addEventListener is supported, 
-        //and if not, assume we are on IE. 
-        //If neither exists, you're screwed, but we didn't cover that in the else case.
-        el.addEventListener('keypress', keyPressed, false);
     </script>
 </body>
 
