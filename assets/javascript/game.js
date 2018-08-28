@@ -1,7 +1,5 @@
-    // put all the stuff on the screen
-
     let guesses = 0;
-    let guessWord = new Array("doggy", "leopard", "tiger", "elephant", "monkey", "cat");
+    let guessWord = new Array("booty", "treasure", "plunder", "doubloons", "scurvy", "wench");
     let partialGuess = [];
     let guessLetters = [];
     let correctGuesses = 0;
@@ -9,15 +7,12 @@
     let originalWord = [];
     let wins = 0;
     let newGame = true;
+    let first = true;
 
-    //    console.log(partialGuess);
-    
-    
+
     function keyPressed(event) {
         let removed = 0;
-
-        event = event || window.event; //capture the event, and ensure we have an event
-        //        var key = event.key || event.which || event.keyCode; //find the key that was pressed
+        event = event || window.event; //capture the event
         let x = event.key;
         if (newGame === true) {
             partialGuess = [];
@@ -32,27 +27,38 @@
             correctGuesses = 0;
             guessLetters = [];
             guesses = 0;
+            document.getElementById("song").play();
             document.getElementById("start").innerHTML = partialGuess.join(' ');
             document.getElementById("guesses").value = "";
             document.getElementById("again").innerHTML = "";
             document.getElementById("guessesLeft").innerHTML = "Guesses left:  " + (9 - guesses);
             document.getElementById("gotIt").innerHTML = "";
+            document.getElementById("warning").innerHTML = "";
+            document.getElementById("unhappy").style.left = "66vw";
+            document.getElementById("unhappy").style.bottom = "58vh";
+            document.getElementById("unhappy").style.display = "block";
+            document.getElementById("escapeBoat").style.display = "none";
+            document.getElementById("PirateShip").style.display = "block";
+            document.getElementById("PirateShipLose").style.display = "none";
             newGame = false;
             return;
         }
 
-        if (guesses++ >= 9) {
+        if (guesses >= 8) {
             console.log("Too many guesses!");
-            //            display sad emoji;
-            //            quit;
+            document.getElementById("warning").innerHTML = "Too many guesses";
+            document.getElementById("again").innerHTML = "Press any key to play again";
+            document.getElementById("guessesLeft").innerHTML = "Guesses left:  0";
+            document.getElementById("PirateShip").style.display = "none";
+            document.getElementById("PirateShipLose").style.display = "block";
+            document.getElementById("unhappy").style.display = "none";
+            newGame = true;
+            return;
         }
 
         if ((x >= "A" && x <= "Z") || (x >= "a" && x <= "z")) {
             document.getElementById("warning").innerHTML = " ";
             console.log("You pressed an alpha");
-            //            if (guessLetters.indexOf(x) >= 0) {
-            //                console.log("Already guessed!");
-            //            } else {
             guessLetters.push(x);
             let charIndex = wordArray.indexOf(x);
             if (charIndex >= 0) {
@@ -63,23 +69,35 @@
                 partialGuess[track] = x;
                 removed++;
                 correctGuesses++;
+            } else { // bad guess
+                guesses++;
+                var audioClip = document.getElementById("walkThePlank");
+                audioClip.source = "assets/audio/WalkThePlank.mp3";
+                audioClip.load();
+                audioClip.play();
+                var xPos = 66 - 2.3 * guesses;
+                var yPos = 58 - 2.3 * guesses;
+                document.getElementById("unhappy").style.left = xPos + "vw";
+                document.getElementById("unhappy").style.bottom = yPos + "vh";
             }
             console.log(partialGuess);
             if (correctGuesses === guessWord[wins].length) {
                 document.getElementById("gotIt").innerHTML = "You got it!";
-                //                document.writeln(guessWord);
-                //                document.writeln("Got it!");
                 document.getElementById("guesses").value = "";
                 document.getElementById("again").innerHTML = "Press any key to play again";
+                document.getElementById("escapeBoat").style.display = "block";
+                document.getElementById("unhappy").style.display = "none";
+
                 newGame = true;
+                guesses = 0;
                 wins++;
             }
         } else {
             document.getElementById("warning").innerHTML = "Only letters!";
+            document.getElementById("angry").style.display = "block";
             console.log("Only alphas!")
-            //        display yucky emoji;
-            //        continue;
         }
+
         document.getElementById("start").innerHTML = partialGuess.join(' ');
         document.getElementById("wins").innerHTML = "Wins:  " + wins;
         document.getElementById("guessesLeft").innerHTML = "Guesses left:  " + (9 - guesses);
@@ -87,18 +105,3 @@
         return;
     }
 
-    //        else {
-    //            if (it's in the word) {
-    //                put it in the partial word (at the same place)
-    //                put up a smiley face
-    //                put it in the array of guesses (avoiding duplicates)
-    //            }
-    //            else {
-    //                put up a sad facep
-    //                put it in the array of guesses (avoiding duplicates)
-
-    //            }
-    //        }
-    //    }
-    //}
-    //}
