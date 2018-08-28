@@ -9,8 +9,14 @@
     let newGame = true;
     let first = true;
 
+    async function waitOneSecond() {
+        let promise = new Promise((resolve, reject) => {
+            setTimeout(() => resolve("done!"), 1000);
+        });
+        await promise;
+    }
 
-    function keyPressed(event) {
+    async function keyPressed(event) {
         let removed = 0;
         event = event || window.event; //capture the event
         let x = event.key;
@@ -37,9 +43,7 @@
             document.getElementById("unhappy").style.left = "66vw";
             document.getElementById("unhappy").style.bottom = "58vh";
             document.getElementById("unhappy").style.display = "block";
-            document.getElementById("escapeBoat").style.display = "none";
             document.getElementById("PirateShip").style.display = "block";
-            document.getElementById("PirateShipLose").style.display = "none";
             newGame = false;
             return;
         }
@@ -71,10 +75,9 @@
                 correctGuesses++;
             } else { // bad guess
                 guesses++;
-                var audioClip = document.getElementById("walkThePlank");
-                audioClip.source = "assets/audio/WalkThePlank.mp3";
-                audioClip.load();
+                var audioClip = new Audio("assets/audio/WalkThePlank.mp3");
                 audioClip.play();
+                await waitOneSecond();
                 var xPos = 66 - 2.3 * guesses;
                 var yPos = 58 - 2.3 * guesses;
                 document.getElementById("unhappy").style.left = xPos + "vw";
@@ -104,4 +107,3 @@
 
         return;
     }
-
