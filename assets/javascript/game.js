@@ -94,6 +94,7 @@
         correctGuesses = 0;
         guessLetters = [];
         guesses = 0;
+        document.getElementById("song").pause();
         document.getElementById("start").innerHTML = partialGuess.join(' ');
         document.getElementById("guesses").value = "";
         document.getElementById("again").innerHTML = "";
@@ -103,6 +104,7 @@
         document.getElementById("unhappy").style.left = "66vw";
         document.getElementById("unhappy").style.bottom = "58vh";
         document.getElementById("unhappy").style.display = "block";
+        document.getElementById("escapeBoat").style.display = "none";
         document.getElementById("PirateShip").style.display = "block";
         return;
     }
