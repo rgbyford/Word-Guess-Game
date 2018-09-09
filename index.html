@@ -24,32 +24,26 @@
     <img id="unhappy" src="assets/images/UnhappyPirate.png" style="display: none">
     <img id="escapeBoat" src="assets/images/EscapeBoat.png" style="display: none">
 
-    <br>
-    <p>Guesses:</p>
-    <br>
-    <br>
-    <input id="guesses" type="text" autofocus onkeyup="keyPressed()">
-    <br>
-    <br>
-    <br>
-    <p id="start">Press any key to get started</p>
-    <br>
-    <br>
-    <p id="wins">Wins: 0</p>
-    <br>
-    <br>
-    <p id="guessesLeft">Guesses left: 9</p>
-    <br>
-    <br>
-    <p id="gotIt"> </p>
-    <br>
-    <br>
-    <p id="warning"> </p>
-    <br>
-    <br>
-    <p id="again"> </p>
-    <br>
-    <br>
+    <div id="spaced">
+        <br>
+        <p>Guesses:</p>
+        <p class="instructions">If a letter is repeated, you must guess it more than once!</p>
+        <input id="guesses" type="text" autofocus onkeydown="keyPressed()">
+        <!-- uses onkeydown so it can prevent backspace from doing anything -->
+        <br>
+        <br>
+        <p id="start">Press any key to get started</p>
+        <p id="guessLetters"></p>
+        <br>
+        <p id="wins">Wins: 0</p>
+        <br>
+        <p id="guessesLeft">Guesses left: 9</p>
+        <br>
+        <p id="gotIt"> </p>
+        <p id="warning"> </p>
+        <br>
+        <p id="again"> </p>
+    </div>
     <h2> Walk the Plank</h2>
     <script src="assets/javascript/game.js">
     </script>

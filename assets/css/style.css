@@ -3,12 +3,36 @@
         color: black;
         font-weight: bold;
         margin-left: 40px;
-        position: absolute;
     }
 
     body,
     html {
         height: 100%;
+    }
+
+    #gotIt {
+        color: #50FF00;
+        background-color: #B0553F;
+        text-align: center;
+    }
+
+    #again, #warning {
+        display: inline-block;
+        background-color: white;
+    }
+
+    .instructions {
+        font-size: 12pt;
+        margin-left: 70px;
+    }
+
+    #guessLetters {
+        font-size: 24pt;
+    }
+
+    #spaced {
+        position: absolute;
+        line-height: 40px;
     }
 
     #PirateShip {
@@ -46,6 +70,8 @@
     #guesses {
         position: absolute;
         margin-left: 60px;
+        line-height: 25px;
+        font-size: 14pt;
     }
 
     h2 {

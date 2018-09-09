@@ -17,9 +17,17 @@
 
     async function keyPressed(event) {
         let removed = 0;
+        
         event = event || window.event; //capture the event
         let x = event.key;
+
+        if(event.keyCode == 8) {   // backspace
+          event.preventDefault();   // stop it from having an effect
+          return;
+        }
+    
         if (newGame === true) {
+            event.preventDefault ();    // don't show the key
             newGameFn();
             newGame = false;
         } else if (guesses >= 8) {
@@ -32,9 +40,10 @@
             document.getElementById("unhappy").style.display = "none";
             newGame = true;
         } else {
-            if ((x >= "A" && x <= "Z") || (x >= "a" && x <= "z")) {
+//            var y = x.search(/( |[!-~])/);            // this works!  Any printable character
+            if ((x.length == 1) && (x.search(/[a-z]/i) >= 0)) {     // is an alpha
+                //                (x >= "A" && x <= "Z") || (x >= "a" && x <= "z")) {
                 document.getElementById("warning").innerHTML = " ";
-                console.log("You pressed an alpha");
                 guessLetters.push(x);
                 let charIndex = wordArray.indexOf(x);
                 if (charIndex >= 0) {
@@ -55,26 +64,28 @@
                     document.getElementById("unhappy").style.left = xPos + "vw";
                     document.getElementById("unhappy").style.bottom = yPos + "vh";
                 }
-                console.log(partialGuess);
                 if (correctGuesses === guessWord[wins].length) {
                     document.getElementById("song").play();
                     document.getElementById("gotIt").innerHTML = "You got it!";
-                    document.getElementById("guesses").value = "";
                     document.getElementById("again").innerHTML = "Press any key to play again";
                     document.getElementById("escapeBoat").style.display = "block";
                     document.getElementById("unhappy").style.display = "none";
 
                     newGame = true;
-                    guesses = 0;
                     wins++;
                 }
             } else {
-                document.getElementById("warning").innerHTML = "Only letters!";
-                document.getElementById("angry").style.display = "block";
-                console.log("Only alphas!")
+                if (x.search(/Enter|Backspace/) == -1) {
+                    document.getElementById("warning").innerHTML = "Only letters!";
+                    document.getElementById("angry").style.display = "block";
+                    console.log("Only alphas!")
+                }
+                if (x.search(/Backspace/) >= 0) {
+                    // put back the removed character
+                }
             }
 
-            document.getElementById("start").innerHTML = partialGuess.join(' ');
+            document.getElementById("guessLetters").innerHTML = partialGuess.join(' ');
             document.getElementById("wins").innerHTML = "Wins:  " + wins;
             document.getElementById("guessesLeft").innerHTML = "Guesses left:  " + (9 - guesses);
         }
@@ -95,7 +106,8 @@
         guessLetters = [];
         guesses = 0;
         document.getElementById("song").pause();
-        document.getElementById("start").innerHTML = partialGuess.join(' ');
+        document.getElementById("start").style.display = "none";
+        document.getElementById("guessLetters").innerHTML = partialGuess.join(' ');
         document.getElementById("guesses").value = "";
         document.getElementById("again").innerHTML = "";
         document.getElementById("guessesLeft").innerHTML = "Guesses left:  " + (9 - guesses);
