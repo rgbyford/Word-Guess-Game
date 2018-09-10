@@ -8,6 +8,17 @@
     let wins = 0;
     let newGame = true;
 
+    /*  testing search.  All these work.
+        var x = "b";
+        var a = x.search (/[a-z]/i);
+        var b = x.search (/[a-z]|[A-Z]/);
+        var c = x.search (/[A-Z]|[a-z]/);
+
+        var y = "B";
+        var d = x.search (/[a-z]/i);
+        var e = x.search (/[a-z]|[A-Z]/);
+        var f = x.search (/[A-Z]|[a-z]/);
+    */
     async function waitOneSecond() {
         let promise = new Promise((resolve, reject) => {
             setTimeout(() => resolve("done!"), 750);
@@ -17,21 +28,23 @@
 
     async function keyPressed(event) {
         let removed = 0;
-        
+
         event = event || window.event; //capture the event
         let x = event.key;
 
-        if(event.keyCode == 8) {   // backspace
-          event.preventDefault();   // stop it from having an effect
-          return;
+        if (event.keyCode == 8) { // backspace
+            event.preventDefault(); // stop it from having an effect
+            return;
         }
-    
+        if (x.length > 1) {
+            return; // ignore shift, ctrl, etc.
+        }
+
         if (newGame === true) {
-            event.preventDefault ();    // don't show the key
+            event.preventDefault(); // don't show the key
             newGameFn();
             newGame = false;
         } else if (guesses >= 8) {
-            console.log("Too many guesses!");
             document.getElementById("warning").innerHTML = "Too many guesses";
             document.getElementById("again").innerHTML = "Press any key to play again";
             document.getElementById("guessesLeft").innerHTML = "Guesses left:  0";
@@ -40,9 +53,8 @@
             document.getElementById("unhappy").style.display = "none";
             newGame = true;
         } else {
-//            var y = x.search(/( |[!-~])/);            // this works!  Any printable character
-            if ((x.length == 1) && (x.search(/[a-z]/i) >= 0)) {     // is an alpha
-                //                (x >= "A" && x <= "Z") || (x >= "a" && x <= "z")) {
+            x = x.toLowerCase();
+            if (x.search(/[a-z]/i) >= 0) { // is an alpha
                 document.getElementById("warning").innerHTML = " ";
                 guessLetters.push(x);
                 let charIndex = wordArray.indexOf(x);
@@ -70,21 +82,13 @@
                     document.getElementById("again").innerHTML = "Press any key to play again";
                     document.getElementById("escapeBoat").style.display = "block";
                     document.getElementById("unhappy").style.display = "none";
-
                     newGame = true;
                     wins++;
                 }
             } else {
-                if (x.search(/Enter|Backspace/) == -1) {
-                    document.getElementById("warning").innerHTML = "Only letters!";
-                    document.getElementById("angry").style.display = "block";
-                    console.log("Only alphas!")
-                }
-                if (x.search(/Backspace/) >= 0) {
-                    // put back the removed character
-                }
+                document.getElementById("warning").innerHTML = "Only letters!";
+                document.getElementById("angry").style.display = "block";
             }
-
             document.getElementById("guessLetters").innerHTML = partialGuess.join(' ');
             document.getElementById("wins").innerHTML = "Wins:  " + wins;
             document.getElementById("guessesLeft").innerHTML = "Guesses left:  " + (9 - guesses);
